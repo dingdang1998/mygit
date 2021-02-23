@@ -2,7 +2,7 @@ let proxyObj = {};
 const CompressionPlugin = require("compression-webpack-plugin");
 proxyObj['/ws'] = {
     ws: true,
-    target: "ws://localhost:8081"
+    target: "ws://192.168.17.32:8080"
 };
 proxyObj['/'] = {
     ws: false,

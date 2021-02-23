@@ -4,7 +4,7 @@ export const initMenu = (router, store) => {
     if (store.state.routes.length > 0) {
         return;
     }
-    getRequest("/system/config/menu").then(data => {
+    getRequest("/menu/getMenus").then(data => {
         if (data) {
             let fmtRoutes = formatRoutes(data);
             router.addRoutes(fmtRoutes);
@@ -15,6 +15,8 @@ export const initMenu = (router, store) => {
 }
 export const formatRoutes = (routes) => {
     let fmRoutes = [];
+    console.log(routes)
+    console.log('routes')
     routes.forEach(router => {
         let {
             path,
