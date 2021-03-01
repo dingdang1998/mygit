@@ -37,7 +37,7 @@
                         <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>
                     </el-breadcrumb>
                     <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
-                        欢迎来到丁丁的权限系统！
+                        欢迎使用权限系统(*^_^*)！
                     </div>
                     <router-view class="homeRouterView"/>
                 </el-main>
