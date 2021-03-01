@@ -49,6 +49,7 @@
             <el-button
               :disabled="importDataDisabled"
               type="success"
+              v-if="$store.state.flag"
               :icon="importDataBtnIcon"
             >
               {{ importDataBtnText }}
@@ -57,7 +58,7 @@
           <el-button type="success" @click="exportData" icon="el-icon-download">
             导出数据
           </el-button>
-          <el-button type="primary" icon="el-icon-plus" @click="showAddEmpView">
+          <el-button v-if="$store.state.flag" type="primary" icon="el-icon-plus" @click="showAddEmpView">
             添加用户
           </el-button>
         </div>
@@ -213,9 +214,9 @@
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button v-if="scope.row.id!==8" @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
-            <el-button v-if="scope.row.enabled !== 1&&scope.row.id!==8" @click="deleteEmp(scope.row)" style="padding: 3px" size="mini" type="danger">停用中</el-button>
-            <el-button v-if="scope.row.enabled === 1&&scope.row.id!==8" style="padding: 3px" size="mini" type="success">启用中</el-button>
-            <el-button v-if="scope.row.id!==8" @click="deleteEmp(scope.row)" style="padding: 3px" size="mini" type="danger">删除</el-button>
+            <el-button v-if="scope.row.enabled !== 1&&scope.row.id!==8&&$store.state.flag" @click="deleteEmp(scope.row)" style="padding: 3px" size="mini" type="danger">停用中</el-button>
+            <el-button v-if="scope.row.enabled === 1&&scope.row.id!==8&&$store.state.flag" style="padding: 3px" size="mini" type="success">启用中</el-button>
+            <el-button v-if="scope.row.id!==8&&$store.state.flag" @click="deleteEmp(scope.row)" style="padding: 3px" size="mini" type="danger">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -944,7 +945,7 @@ export default {
     initEmps(type) {
       this.loading = true;
       let url =
-        "/user/getUsersToPage/?page=" + this.page + "&size=" + this.size;
+        "/employee/basic/getUsersToPage/?page=" + this.page + "&size=" + this.size;
       if (type && type == "advanced") {
         if (this.searchValue.politicId) {
           url += "&politicId=" + this.searchValue.politicId;

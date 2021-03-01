@@ -18,7 +18,8 @@ const store = new Vuex.Store({
         currentHr: JSON.parse(window.sessionStorage.getItem("user")),
         filterKey: '',
         stomp: null,
-        isDot: {}
+        isDot: {},
+        flag:false
     },
     mutations: {
         INIT_CURRENTHR(state, hr) {

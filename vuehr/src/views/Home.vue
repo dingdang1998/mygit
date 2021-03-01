@@ -62,6 +62,16 @@
                 return this.$store.state.currentHr;
             }
         },
+        created(){
+            // if(this.$store.state.currentHr.name === '系统管理员')
+            console.log(this.$store.state.currentHr)
+            this.$store.state.flag = false
+            this.$store.state.currentHr.roles.forEach(val => {
+                if(val.name === 'ROLE_admin') {
+                    this.$store.state.flag = true
+                }
+            })
+        },
         methods: {
             goChat() {
                 this.$router.push("/chat");
