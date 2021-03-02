@@ -29,7 +29,7 @@
           placeholder="请输入密码"
         />
       </el-form-item>
-      <el-form-item prop="code" style="margin-bottom:5px">
+      <el-form-item prop="code" style="margin-bottom: 5px">
         <el-input
           size="normal"
           type="text"
@@ -47,9 +47,9 @@
         />
       </el-form-item>
       <!-- <el-checkbox size="normal" class="loginRemember" v-model="checked"></el-checkbox> -->
-      <div style="text-align:right;margin-bottom:5px">
+      <div style="text-align: right; margin-bottom: 5px">
         <el-button
-          style="size:mini;border:none;font-size:14px"
+          style="size: mini; border: none; font-size: 14px"
           @click="createClick"
           >注册</el-button
         >
@@ -57,7 +57,7 @@
       <el-button
         size="normal"
         type="primary"
-        style="width: 100%;"
+        style="width: 100%"
         @click="submitLogin"
         >登录</el-button
       >
@@ -65,21 +65,25 @@
     <el-dialog title="用户注册" :visible.sync="dialogFormVisible" width="30%">
       <el-form :model="form" :rules="rule" ref="form">
         <el-form-item label="姓名" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.name" style="width:200px"></el-input>
+          <el-input v-model="form.name" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item
           label="用户名"
           :label-width="formLabelWidth"
           prop="username"
         >
-          <el-input v-model="form.username" style="width:200px"></el-input>
+          <el-input v-model="form.username" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item
           label="密码"
           :label-width="formLabelWidth"
           prop="password"
         >
-          <el-input v-model="form.password" style="width:200px" type="password"></el-input>
+          <el-input
+            v-model="form.password"
+            style="width: 200px"
+            type="password"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -116,7 +120,15 @@ export default {
         var usernameReg = /^[A-Za-z0-9]+$/;
         var flag = usernameReg.test(value);
         if (flag) {
-          callback();
+          this.getRequest("/employee/basic/checkUsername", {username:this.form.username}).then(
+            (resp) => {
+              if (resp) {
+                callback("用户名已经存在");
+              } else {
+                callback();
+              }
+            }
+          );
         } else {
           callback("用户名只能输入字母或数字");
         }
@@ -176,16 +188,22 @@ export default {
   methods: {
     // 点击注册
     createClick() {
+      this.form = {
+        name: "",
+        username: "",
+        password: "",
+      }
       if (this.$refs["form"] !== undefined) {
         this.$refs["form"].resetFields();
       }
+      console.log(this.form)
       this.dialogFormVisible = true;
     },
     // 确认注册
     sureCreate() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.postRequest("/user/addUser", this.form).then(() => {
+          this.postRequest("/employee/basic/addUser", this.form).then(() => {
             this.loading = false;
             this.dialogFormVisible = false;
           });
@@ -204,7 +222,10 @@ export default {
             this.loading = false;
             if (resp) {
               this.$store.commit("INIT_CURRENTHR", resp.object);
-              window.sessionStorage.setItem("user", JSON.stringify(resp.object));
+              window.sessionStorage.setItem(
+                "user",
+                JSON.stringify(resp.object)
+              );
               let path = this.$route.query.redirect;
               this.$router.replace(
                 path == "/" || path == undefined ? "/home" : path

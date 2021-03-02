@@ -250,7 +250,7 @@
                 scope.row.id !== 8 &&
                 $store.state.flag
               "
-              @click="deleteEmp(scope.row)"
+              @click="updateUserStatus(scope.row)"
               style="padding: 3px"
               size="mini"
               type="danger"
@@ -265,6 +265,7 @@
               style="padding: 3px"
               size="mini"
               type="success"
+              @click="updateUserStatus(scope.row)"
               >启用中</el-button
             >
             <el-button
@@ -518,6 +519,21 @@ export default {
     this.initPositions();
   },
   methods: {
+    updateUserStatus(data) {
+      var enabled;
+      if (data.enabled === 1) {
+        enabled = 0;
+      } else if (data.enabled === 0) {
+        enabled = 1;
+      }
+      this.putRequest(
+        "/employee/basic/updateUserStatus/" + data.id + "/" + enabled
+      ).then((resp) => {
+        if (resp) {
+          this.initEmps();
+        }
+      });
+    },
     searvhViewHandleNodeClick(data) {
       this.inputDepName = data.name;
       this.searchValue.departmentId = data.id;
@@ -553,7 +569,7 @@ export default {
     showEditEmpView(data) {
       this.initPositions();
       this.title = "编辑用户信息";
-      this.emp = Object.assign({},data);
+      this.emp = Object.assign({}, data);
       this.dialogVisible = true;
     },
     deleteEmp(data) {
@@ -567,7 +583,7 @@ export default {
         }
       )
         .then(() => {
-          this.deleteRequest("/employee/basic/" + data.id).then((resp) => {
+          this.deleteRequest("/employee/basic/delete/" + data.id).then((resp) => {
             if (resp) {
               this.initEmps();
             }
@@ -585,11 +601,11 @@ export default {
         this.$refs["empForm"].validate((valid) => {
           if (valid) {
             var putData = {
-              id : this.emp.id,
-              name : this.emp.name,
-              username : this.emp.username,
-              enabled : this.emp.enabled,
-            }
+              id: this.emp.id,
+              name: this.emp.name,
+              username: this.emp.username,
+              enabled: this.emp.enabled,
+            };
             this.putRequest("/employee/basic/compile", putData).then((resp) => {
               if (resp) {
                 this.dialogVisible = false;
