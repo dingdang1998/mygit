@@ -7,7 +7,6 @@
     >
         <div class="permissManaTool">
             <el-input size="small" placeholder="请输入角色英文名" v-model="role.name">
-                <template slot="prepend">ROLE_</template>
             </el-input>
             <el-input size="small" placeholder="请输入角色中文名" v-model="role.nameZh"
                       @keydown.enter.native="doAddRole"></el-input>
@@ -94,7 +93,7 @@
             doAddRole() {
                 if (this.role.name && this.role.nameZh) {
                     this.globalLoading = true;
-                    this.postRequest("/system/basic/permiss/role", this.role).then(resp => {
+                    this.postRequest("/system/basic/add", this.role).then(resp => {
                     this.globalLoading = false;
                         if (resp) {
                             this.role.name = '';
@@ -112,7 +111,7 @@
             doUpdate(rid, index) {
                 let tree = this.$refs.tree[index];
                 let selectedKeys = tree.getCheckedKeys(true);
-                let url = '/system/basic/permiss/?rid=' + rid;
+                let url = '/system/basic/update/?rid=' + rid;
                 selectedKeys.forEach(key => {
                     url += '&mids=' + key;
                 })
@@ -129,14 +128,14 @@
                 }
             },
             initSelectedMenus(rid) {
-                this.getRequest("/system/basic/permiss/mids/" + rid).then(resp => {
+                this.getRequest("/system/basic/getMenuIds/" + rid).then(resp => {
                     if (resp) {
                         this.selectedMenus = resp;
                     }
                 })
             },
             initAllMenus() {
-                this.getRequest("/system/basic/permiss/menus").then(resp => {
+                this.getRequest("/system/basic/menus").then(resp => {
                     if (resp) {
                         this.allmenus = resp;
                     }
@@ -144,7 +143,7 @@
             },
             initRoles() {
                 this.loading = true;
-                this.getRequest("/system/basic/permiss/").then(resp => {
+                this.getRequest("/system/basic/getAll").then(resp => {
                     this.loading = false;
                     if (resp) {
                         this.roles = resp;
