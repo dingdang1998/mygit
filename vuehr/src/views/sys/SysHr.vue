@@ -9,19 +9,19 @@
             <el-card class="hr-card" v-for="(hr,index) in hrs" :key="index">
                 <div slot="header" class="clearfix">
                     <span>{{hr.name}}</span>
-                    <el-button style="float: right; padding: 3px 0;color: #e30007;" type="text"
-                               icon="el-icon-delete" @click="deleteHr(hr)"></el-button>
+                    <!-- <el-button style="float: right; padding: 3px 0;color: #e30007;" type="text"
+                               icon="el-icon-delete" @click="deleteHr(hr)"></el-button> -->
                 </div>
                 <div>
-                    <div class="img-container">
+                    <!-- <div class="img-container">
                         <img :src="hr.userface" :alt="hr.name" :title="hr.name" class="userface-img">
-                    </div>
+                    </div> -->
                     <div class="userinfo-container">
-                        <div>用户名：{{hr.name}}</div>
-                        <div>手机号码：{{hr.phone}}</div>
+                        <div>用户名：{{hr.username}}</div>
+                        <!-- <div>手机号码：{{hr.phone}}</div>
                         <div>电话号码：{{hr.telephone}}</div>
-                        <div>地址：{{hr.address}}</div>
-                        <div>用户状态：
+                        <div>地址：{{hr.address}}</div> -->
+                        <!-- <div>用户状态：
                             <el-switch
                                     v-model="hr.enabled"
                                     active-text="启用"
@@ -30,7 +30,7 @@
                                     inactive-color="#ff4949"
                                     inactive-text="禁用">
                             </el-switch>
-                        </div>
+                        </div> -->
                         <div>用户角色：
                             <el-tag type="success" style="margin-right: 4px" v-for="(role,indexj) in hr.roles"
                                     :key="indexj">{{role.nameZh}}
@@ -53,7 +53,7 @@
                                 <el-button slot="reference" icon="el-icon-more" type="text"></el-button>
                             </el-popover>
                         </div>
-                        <div>备注：{{hr.remark}}</div>
+                        <!-- <div>备注：{{hr.remark}}</div> -->
                     </div>
                 </div>
             </el-card>
@@ -149,14 +149,14 @@
                 })
             },
             initAllRoles() {
-                this.getRequest("/system/hr/roles").then(resp => {
+                this.getRequest("/system/operator/roles").then(resp => {
                     if (resp) {
                         this.allroles = resp;
                     }
                 })
             },
             initHrs() {
-                this.getRequest("/system/hr/?keywords="+this.keywords).then(resp => {
+                this.getRequest("/system/operator/?keywords="+this.keywords).then(resp => {
                     if (resp) {
                         this.hrs = resp;
                     }
@@ -196,7 +196,7 @@
     }
 
     .hr-card {
-        width: 350px;
+        width: 250px;
         margin-bottom: 20px;
     }
 </style>

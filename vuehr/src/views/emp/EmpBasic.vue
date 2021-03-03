@@ -556,7 +556,7 @@ export default {
       this.importDataDisabled = true;
     },
     exportData() {
-      window.open("/employee/basic/export", "_parent");
+      window.open("/employee/basic/export/?name="+this.keyword, "_parent");
     },
     emptyEmp() {
       this.emp = {
