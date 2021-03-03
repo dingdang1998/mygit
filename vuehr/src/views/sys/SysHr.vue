@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="margin-top: 10px;display: flex;justify-content: center">
+        <div style="margin-top: 10px;display: flex;justify-content: left">
             <el-input v-model="keywords" placeholder="通过用户名搜索用户..." prefix-icon="el-icon-search"
                       style="width: 400px;margin-right: 10px" @keydown.enter.native="doSearch"></el-input>
             <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
@@ -121,7 +121,7 @@
                     }
                 }
                 if (flag) {
-                    let url = '/system/hr/role?hrid=' + hr.id;
+                    let url = '/system/operator/update?userId=' + hr.id;
                     this.selectedRoles.forEach(sr => {
                         url += '&rids=' + sr;
                     });
@@ -190,13 +190,11 @@
 
     .hr-container {
         margin-top: 10px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
     }
 
     .hr-card {
-        width: 250px;
-        margin-bottom: 20px;
+       width: 250px;
+       margin: 0 20px 20px 0;
+       float:left
     }
 </style>

@@ -160,7 +160,7 @@ export default {
       formLabelWidth: "160px",
       dialogFormVisible: false,
       loading: false,
-      vcUrl: "/verifyCode?time=" + new Date(),
+      vcUrl: "/vc.jpg",
       loginForm: {
         username: "",
         password: "",
@@ -211,7 +211,7 @@ export default {
       });
     },
     updateVerifyCode() {
-      this.vcUrl = "/verifyCode?time=" + new Date();
+      this.vcUrl = "/vc.jpg";
       console.log(this.vcUrl);
     },
     submitLogin() {
@@ -231,7 +231,7 @@ export default {
                 path == "/" || path == undefined ? "/home" : path
               );
             } else {
-              this.vcUrl = "/verifyCode?time=" + new Date();
+              this.vcUrl = "/vc.jpg";
             }
           });
         } else {

@@ -4,15 +4,15 @@
             <el-header class="homeHeader">
                 <div class="title">权限系统</div>
                 <div>
-                    <el-button icon="el-icon-bell" type="text" style="margin-right: 8px;color: #000000;" size="normal" @click="goChat"></el-button>
+                    <!-- <el-button icon="el-icon-bell" type="text" style="margin-right: 8px;color: #000000;" size="normal" @click="goChat"></el-button> -->
                     <el-dropdown class="userInfo" @command="commandHandler">
   <span class="el-dropdown-link">
     {{user.name}}<i><img :src="user.userface" alt=""></i>
   </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
-                            <el-dropdown-item command="setting">设置</el-dropdown-item>
-                            <el-dropdown-item command="logout" divided>注销登录</el-dropdown-item>
+                            <!-- <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
+                            <el-dropdown-item command="setting">设置</el-dropdown-item> -->
+                            <el-dropdown-item command="logout">注销登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
