@@ -48,6 +48,7 @@
       </el-form-item>
       <!-- <el-checkbox size="normal" class="loginRemember" v-model="checked"></el-checkbox> -->
       <div style="text-align: right; margin-bottom: 5px">
+        <el-checkbox v-model="remeberme">自动登录</el-checkbox>
         <el-button
           style="size: mini; border: none; font-size: 14px"
           @click="createClick"
@@ -160,12 +161,13 @@ export default {
       formLabelWidth: "160px",
       dialogFormVisible: false,
       loading: false,
-      vcUrl: "/vc.jpg",
+      vcUrl: '/vc.jpg?time='+new Date(),
       loginForm: {
         username: "",
         password: "",
         code: "",
       },
+      remeberme:"",
       checked: true,
       rules: {
         username: [
@@ -211,12 +213,16 @@ export default {
       });
     },
     updateVerifyCode() {
-      this.vcUrl = "/vc.jpg";
-      console.log(this.vcUrl);
+      this.vcUrl='/vc.jpg?time='+new Date()
     },
     submitLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
+          if(this.remeberme){
+            this.loginForm['remember-me']='on'
+          } else {
+            delete this.loginForm['remember-me']
+          }
           this.loading = true;
           this.postRequest("/doLogin", this.loginForm).then((resp) => {
             this.loading = false;
@@ -231,7 +237,7 @@ export default {
                 path == "/" || path == undefined ? "/home" : path
               );
             } else {
-              this.vcUrl = "/vc.jpg";
+              this.vcUrl = '/vc.jpg?time='+new Date();
             }
           });
         } else {
